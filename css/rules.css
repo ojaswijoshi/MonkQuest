@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+h1{
+    width: 100%;
+    text-align: center;
+    background-color: rgb(255, 179, 129);
+    margin: 20px 0;
+}
+img{
+    margin: 20px 0;
+}

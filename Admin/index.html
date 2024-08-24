@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Monk Game With Memory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>User List</h2>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Date</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Users will be dynamically loaded here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let intervalId; // To store the interval ID
+        const INTERVAL_TIME = 1000; // Time in milliseconds
+
+        // Start or restart the interval
+        function startUpdates() {
+            if (intervalId) {
+                clearInterval(intervalId); // Clear any existing interval
+            }
+            intervalId = setInterval(loadUsers, INTERVAL_TIME); // Set new interval
+        }
+
+        // Load users when the page is ready
+        // $(document).ready(function() {
+        //     loadUsers(); // Initial load of users
+        //     setInterval(loadUsers, 1000); // Reload users every 5 seconds
+        // });
+
+        // Load users when the page is ready
+        $(document).ready(function () {
+            loadUsers();
+        });
+
+        // Function to load users
+        function loadUsers() {
+            $.ajax({
+                url: '../Database/fetch_user.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var userTableBody = $('#userTable tbody');
+                    userTableBody.empty(); // Clear the table before adding new data
+
+                    response.forEach(function (user) {
+                        var row = `<tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.gender}</td>
+                            <td>${user.date}</td>
+                        </tr>`;
+                        userTableBody.append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error loading users:', error);
+                }
+            });
+        }
+        loadUsers()
+         // Start automatic updates when the page loads
+        $(document).ready(function() {
+            startUpdates(); // Initial start
+        });
+
+        // Function to pause updates
+        function pauseUpdates() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }
+
+        // Function to resume updates
+        function resumeUpdates() {
+            if (!intervalId) {
+                startUpdates();
+            }
+        }
+    </script>
+</body>

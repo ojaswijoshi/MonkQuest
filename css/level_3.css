@@ -1,0 +1,704 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(38, 87, 179);
+    overflow: hidden;
+}
+.control-panel{
+    position: fixed;
+    top: 10px;
+    left: 20px;
+   z-index: 999;
+}
+.control-btns{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.score , .Health , .goldenEnergies,.level-text{
+    color: white;
+    font-size: 25px;
+    font-weight: 800;
+}
+.ground{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(62, 26, 0);
+    width: 100vw;
+    height: 9vh;
+}
+.ground::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: green;
+    width: inherit;
+    height: 2.5vh;
+}
+.trees{
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    display: flex;
+    z-index: -11;
+}
+.densetree{
+    transform: translateY(30px)!important;
+}
+.objects{
+    position: absolute;
+    top: -75px;
+    left: 30%;
+    display: flex;
+    gap: 350px;
+    z-index: 9;
+}
+.chopped-tree-energy , .chopped-tree-first-aid{
+    position: relative;
+}
+.t-energy , .t-first-aid{
+    position: absolute;
+    top: -35px;
+    left: 62px;
+}
+.clouds{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+}
+.clouds img:nth-child(odd){
+   padding-top: 150px;
+}
+.clouds img{
+    animation: cloud 19s linear infinite;
+    z-index: -1;
+}
+@keyframes cloud {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
+.wolf{
+  /* transform: translateY(25%); */
+  z-index: 9;
+  transition: all 0.2s linear;
+  animation: wolf 2s alternate infinite;
+}
+@keyframes wolf {
+  0%{
+      transform: translateX(0);
+  }
+  100%{
+      transform: translateX(300px);
+  }
+}
+.spike{
+    transform: translateY(8%);
+}
+.bear{
+  z-index: 9;
+  transform: translateY(0px);
+  animation: bear 2s alternate infinite;
+}
+@keyframes bear {
+  0%{
+      transform: translateX(0);
+  }
+  100%{
+      transform: translateX(300px);
+  }
+}
+.space{
+    margin-left: 350px;
+}
+.first-aid{
+    transform: translateY(8%);
+}
+.river{
+    z-index: 9;
+    transform: translateY(27%);
+}
+.hermit,.hermit1{
+    transform: translateY(-57%);
+}
+.d-flex{
+    display: flex;
+}
+/* Add this to your existing CSS */
+
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+}
+
+#player {
+    position: absolute;
+    bottom: 8%;
+    left: 10%;
+    z-index: 10; /* Ensure the player is on top of other elements */
+}
+#player img{
+    width: 80px;
+    height: auto;
+    display: inline-block;
+}
+
+.fade-out {
+    transition: opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.objects img {
+    display: inline-block;
+}
+
+
+/* CSS for Jump Animation */
+#player img {
+    position: relative;
+    bottom: 0;
+    transition: bottom 0.3s ease;
+}
+
+#player img.jump {
+    animation: jump-animation 1s ease;
+}
+
+@keyframes jump-animation {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-300px); } /* Adjust the jump height as needed */
+    100% { transform: translateY(0); }
+}
+
+.fade-out {
+    transition: opacity 1s ease;
+    opacity: 0;
+}
+
+
+
+.pause_game , .game_form{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    top: 30%;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.game_form{
+    display: block;
+}
+.game_form form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.game_form form input{
+    padding: 20px 30px;
+    border: 2px solid black;
+    border-radius: 17px;
+    font-size: 20px;
+}
+.game_form form label{
+    transform: translateX(150px);
+}
+.pause_game img , .game_form img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+}
+.pause-text ,.form-text{
+    position: absolute;
+    top: 13%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    font-size: 40px;
+    color: white;
+}
+.pause-close{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    color: white;
+    font-size: 25px;
+    background:linear-gradient(to right,#B66104,#5E2A04);
+    padding: 20px 60px;
+    border-radius: 20px;
+}
+.user-text{
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    font-size: 40px;
+    color: #B66104;
+    text-align: center;
+}
+a{
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+.indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+.animal_indicator{
+    position: absolute;
+    top: 5%;
+    left: 45%;
+    color: red;
+    font-size: 35px;
+    display: none;
+    transition: all 0.3s linear;
+}
+
+.goldenEnergies{
+    display: flex;
+    align-items: center;
+}
+
+.game_over{
+    visibility: hidden;
+}
+.game_over{
+    top: 50px;
+    font-size: 50px;
+    color: red;
+    text-align: center;
+}
+.snowman5,.snowman1,.snowman2,.snowman3,.snowman4{
+    transform: translateY(-60%)
+}
+.snowman_answers,.snowman_final{
+    width: 100vw;
+    height: 100vh;
+    color: black;
+    /* position: relative; */
+}
+.snowman1_ans{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 20px 80px;
+    border: 3px solid black;
+    border-radius: 20px;
+    visibility: hidden;
+}
+.snowman2_ans{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 20px 80px;
+    border: 3px solid black;
+    border-radius: 20px;
+    visibility: hidden;
+}
+.snowman3_ans{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 20px 80px;
+    border: 3px solid black;
+    border-radius: 20px;
+    visibility: hidden;
+}
+.snowman4_ans{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 20px 80px;
+    border: 3px solid black;
+    border-radius: 20px;
+    visibility: hidden;
+}
+.snowman_final{
+  visibility: hidden;
+}
+
+/* memory game  */
+
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container ,.container1{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 550px;
+  width: 90%;
+  margin: auto;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 999;
+}
+.container h2,.container1 h2{
+    text-align: center;
+    color: white;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.board,.board1 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+@media screen and (min-width: 480px) {
+  .board,.board1 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+  }
+}
+
+.card {
+  position: relative;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+  padding-bottom: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 12.5vw;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.card.is-match {
+  background-color: #99ce2a;
+  animation: match 0.5s ease-in-out;
+  cursor: default;
+}
+
+.card.is-flipped {
+  /* Temporary style for flipped card */
+  background-color: #fff;
+}
+
+@media screen and (min-width: 800px) {
+  .card {
+    font-size: 100px;
+  }
+}
+
+@keyframes match {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  60% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#character_gender{
+    background-color: #B66203;
+    padding: 20px 20px;
+    border-radius: 15px;
+    color: white;
+    border: 2px solid black;
+}
+.hidden{
+    visibility: hidden !important;;
+}
+
+
+/* game quiz  */
+
+/* Ensure consistent typography and hierarchy */
+body {
+    font-family: "Poppins", sans-serif;
+    /* Gradient background with fallback color */
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+  }
+  
+  /* Main and scoreboard containers styling */
+  .quiz-container,
+  .scoreboard-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 10%);
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px; /* Adjust maximum width */
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+    z-index: 99999;
+  }
+  
+  /* Header section with question number, timer, and score */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+  }
+  
+  /* Styling for question number, timer, and score elements */
+  #question-number,
+  #timer,
+  #score {
+    font-size: 1.2em;
+    color: #777;
+  }
+  
+  /* Timer element with color transition */
+  #timer {
+    color: #e74c3c; /* Initial color */
+    transition: color 0.3s ease-in-out; /* Smooth transition for color change */
+  }
+  
+  /* Progress bar container */
+  .progress-container {
+    width: 100%;
+    background: #f2f2f2;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 30px 0;
+  }
+  
+  /* Progress bar with width transition */
+  .progress-bar {
+    width: 0;
+    height: 10px;
+    background: #0acf83;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  /* Main section with question text */
+  .main_section {
+    margin: 30px 0;
+
+  }
+  
+  /* Question text styling */
+  h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Options container */
+  .options {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 20px;
+  }
+  
+  /* Styling for answer options */
+  label {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.6s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Radio input styling */
+  input[type="radio"] {
+    margin-right: 12px;
+  }
+  
+  /* Footer section with next button */
+  footer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Next and restart buttons styling */
+  #next-button,
+  #restart-button {
+    background: #0acf83;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hover effect for options */
+  .options label:hover {
+    background-color: #e0e0e0; /* Lighter background on hover */
+    transform: translateY(-3px); /* Move up slightly on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+  }
+  
+  /* Hover effect for progress bar */
+  .progress-bar:hover {
+    background-color: #09ca73; /* Brighter color on hover */
+  }
+  
+  /* Hover effect for next and restart buttons */
+  #next-button:hover,
+  #restart-button:hover {
+    background-color: #09ca73; /* Brighter color on hover */
+    transform: scale(1.05); /* Slightly larger scale on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+  }
+  
+  /* Scoreboard container and table styling */
+  .scoreboard-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Scoreboard table header and cell styling */
+  .scoreboard-container th,
+  .scoreboard-container td {
+    border: 1px solid #ddd;
+    padding: 12px;
+  }
+  
+  .scoreboard-container th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  /* Question text and options animation transitions */
+  #question-text {
+    transition: opacity 0.4s ease-in-out; /* Smooth opacity transition */
+  }
+  
+  .options label:hover {
+    opacity: 0.9; /* Slight opacity decrease on hover */
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    .quiz-container,
+    .scoreboard-container {
+      width: 90%; /* Adjust width for smaller screens */
+      max-width: 90%; /* Ensure maximum width doesn't exceed screen size */
+    }
+  
+    h2 {
+      font-size: 1.8em; /* Adjust font size */
+    }
+  
+    #next-button,
+    #restart-button {
+      padding: 12px 24px; /* Adjust button padding */
+      font-size: 1em; /* Adjust button font size */
+    }
+  
+    .options label {
+      padding: 12px; /* Smaller padding for options */
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .quiz-container,
+    .scoreboard-container {
+      padding: 20px; /* Adjust padding for smaller screens */
+    }
+  
+    h2 {
+      font-size: 1.6em; /* Further adjust font size */
+    }
+  
+    #next-button,
+    #restart-button {
+      padding: 10px 20px; /* Adjust button padding */
+      font-size: 0.9em; /* Adjust button font size */
+    }
+  
+    .options label {
+      padding: 12px; /* Smaller padding for options */
+    }
+  }
+  
+  @media screen and (max-width: 450px) {
+    .quiz-container,
+    .scoreboard-container {
+      padding: 15px; /* Adjust padding for very small screens */
+    }
+  
+    h2 {
+      font-size: 1.4em; /* Further adjust font size */
+    }
+  
+    #next-button,
+    #restart-button {
+      padding: 8px 16px; /* Adjust button padding */
+      font-size: 0.8em; /* Adjust button font size */
+    }
+  
+    .options label {
+      padding: 10px; /* Smaller padding for options */
+    }
+  }
+  
